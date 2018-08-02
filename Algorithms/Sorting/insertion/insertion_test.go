@@ -1,10 +1,17 @@
 package insertion
 
 import (
+	"math/rand"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
+
+const size int = 100000
+
+var list = make([]int, size)
+var prng = rand.New(rand.NewSource(int64(time.Now().Nanosecond())))
 
 func TestSort(t *testing.T) {
 	t.Parallel()
@@ -57,4 +64,28 @@ func Equal(a, b []int) bool {
 		}
 	}
 	return true
+}
+
+func BenchmarkSort(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		b.StopTimer()
+		for i := range list {
+			list[i] = prng.Int()
+		}
+		b.StartTimer()
+
+		Sort(list)
+	}
+}
+
+func BenchmarkSortReverse(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		b.StopTimer()
+		for i := range list {
+			list[i] = prng.Int()
+		}
+		b.StartTimer()
+
+		SortReverse(list)
+	}
 }
