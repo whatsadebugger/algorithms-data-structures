@@ -1,7 +1,7 @@
 package trie
 
-// AlphabetSize number of letters
-const AsciiValues = 128
+// ASCIIValues number of letters
+const ASCIIValues = 128
 
 // Node our only kind of node in the trie
 type Node struct {
@@ -12,7 +12,7 @@ type Node struct {
 // NewNode creates a new node initialized with a slice of pointers to child nodes
 func NewNode() *Node {
 	return &Node{
-		children: make([]*Node, AsciiValues),
+		children: make([]*Node, ASCIIValues),
 	}
 }
 

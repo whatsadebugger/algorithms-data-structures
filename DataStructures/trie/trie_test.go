@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/whatsadebugger/boggle/trie"
+	"github.com/whatsadebugger/algorithms-data-structures/datastructures/trie"
 )
 
 func TestTrie(t *testing.T) {
