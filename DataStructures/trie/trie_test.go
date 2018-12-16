@@ -1,36 +1,72 @@
 package trie_test
 
 import (
-	"github.com/whatsadebugger/algorithms-data-structures/DataStructures/trie"
+	"bufio"
+	"os"
 	"testing"
+
+	"github.com/whatsadebugger/boggle/trie"
 )
 
-func TestInsert(t *testing.T) {
+func TestTrie(t *testing.T) {
+	tree := trie.NewNode()
 
+	tree.Insert("wow")
+	if !tree.Search("wow") {
+		t.Fatal("Could not find wow")
+	}
+	tree.Insert("you'd")
+	if !tree.Search("you'd") {
+		t.Fatal("Could not find you'd")
+	}
 }
 
-func TestSearch(t *testing.T) {
+func BenchmarkTrieInsert(b *testing.B) {
+	b.StopTimer()
 
+	words := make([]string, 0)
+	tree := trie.NewNode()
+	f, err := os.Open("wordsEn.txt")
+	no(err)
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		words = append(words, scanner.Text())
+	}
+
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		for _, word := range words {
+			tree.Insert(word)
+		}
+	}
 }
 
-func TestTree(t *testing.T) {
-	keys := []string{
-		"the", "a", "there",
-		"answer", "any", "by",
-		"bye", "their",
+func BenchmarkTrieSearch(b *testing.B) {
+	b.StopTimer()
+
+	words := make([]string, 0)
+	tree := trie.NewNode()
+	f, err := os.Open("../wordsEn.txt")
+	no(err)
+
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		words = append(words, scanner.Text())
 	}
 
-	root := trie.Node{}
-
-	// Construct trie
-	for i := 0; i < len(keys); i++ {
-		root.Insert(keys[i])
+	for _, word := range words {
+		tree.Insert(word)
 	}
-
-	// Search for different keys
-	if !root.Search("the") {
-		t.fai
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		for _, word := range words {
+			tree.Search(word)
+		}
 	}
+}
 
-	root.Search("these")
+func no(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
