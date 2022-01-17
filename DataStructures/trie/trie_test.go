@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/whatsadebugger/algorithms-data-structures/datastructures/trie"
+	"github.com/whatsadebugger/algorithms-data-structures/DataStructures/trie"
 )
 
 func TestTrie(t *testing.T) {
@@ -46,7 +46,7 @@ func BenchmarkTrieSearch(b *testing.B) {
 
 	words := make([]string, 0)
 	tree := trie.NewNode()
-	f, err := os.Open("../wordsEn.txt")
+	f, err := os.Open("wordsEn.txt")
 	no(err)
 
 	scanner := bufio.NewScanner(f)
